@@ -1,0 +1,23 @@
+@tailwind utilities;
+
+@layer utilities {
+  .no-spin::-webkit-inner-spin-button {
+    display: none;
+  }
+
+  .custom-shadow {
+    box-shadow: 0 0 1px 1px #0b2ac45a, 0 0 1.5px 1.5px #5c77ff5a, 0 0 2.5px 2.5px #aab6f55a;
+
+    transition-duration: 600ms;
+  }
+
+  .custom-box-shadow {
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  }
+
+  .btn-animation {
+    translate: 0 -0.3rem;
+
+    transition: .8s;
+  }
+}
