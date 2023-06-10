@@ -31,17 +31,66 @@ export default function StaffUsersPage() {
       setCount(response.data.count);
       setPage(response.data.page);
     } catch (error) {
-      toast.error("problemas ao carregar os usuários");
+      toast.error("Problemas ao carregar os usuários");
     }
   };
 
-  const filterUsers = async () => {};
+  const prevUsers = async () => {
+    try {
+      if (!prevUrl) {
+        throw new Error();
+      }
+      const response = await api.get(prevUrl, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      setUsers(response.data.results);
+      setNextUrl(response.data.next);
+      setPrevUrl(response.data.previous);
+      setCount(response.data.count);
+      setPage(response.data.page);
+    } catch (error) {
+      toast.error("Problemas ao carregar a página posterior");
+      await getUsers();
+    }
+  };
+
+  const nextUsers = async () => {
+    try {
+      if (!nextUrl) {
+        throw new Error();
+      }
+      const response = await api.get(nextUrl, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      setUsers(response.data.results);
+      setNextUrl(response.data.next);
+      setPrevUrl(response.data.previous);
+      setCount(response.data.count);
+      setPage(response.data.page);
+    } catch (error) {
+      toast.error("Problemas ao carregar a página posterior");
+      await getUsers();
+    }
+  };
+
+  const filterUsers = async () => {
+    try {
+    } catch (error) {
+      toast.error("Erro ao filtrar os usuários");
+    }
+  };
 
   const filterChange = (value: string) => {
     setFilterValue(value);
 
     if (value === "") {
-      //lógica para exibir todos os usuários
+      getUsers();
     }
   };
 
