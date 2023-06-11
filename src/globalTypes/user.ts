@@ -11,10 +11,19 @@ export interface IUser {
   company: ICompany;
 }
 
-export interface IUserCreateRequest {
+export interface IUserCreateRequestForm {
   name: string;
   password: string;
   confirmPassword?: string;
   securityAsk: string;
   securityAnswer: string;
+}
+
+export interface IUserCreateRequest {
+  name: string;
+  password: string;
+  securityAsk: string;
+  securityAnswer: string;
+  isAdm: boolean;
+  companyId: string;
 }

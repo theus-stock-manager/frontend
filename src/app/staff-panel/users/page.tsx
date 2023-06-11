@@ -109,20 +109,25 @@ export default function StaffUsersPage() {
           />
         ))}
 
-        <div>
-          <h3 className="text-primary">
-            Total: <span>{`${count} usuário${count !== 1 ? "s" : ""}`}</span>
-          </h3>
-        </div>
+        {users.length === 0 && <span>Carregando...</span>}
 
-        {!isFilter && (
-          <div className="w-full">
-            <B.PaginationBlock
-              actionPage={getAllUsers}
-              currentPage={currentPage}
-              numOfPages={numOfPages}
-            />
-          </div>
+        {!isFilter && users.length > 0 && (
+          <>
+            <div>
+              <h3 className="text-primary">
+                Total:{" "}
+                <span>{`${count} usuário${count !== 1 ? "s" : ""}`}</span>
+              </h3>
+            </div>
+
+            <div className="w-full">
+              <B.PaginationBlock
+                actionPage={getAllUsers}
+                currentPage={currentPage}
+                numOfPages={numOfPages}
+              />
+            </div>
+          </>
         )}
       </section>
     </>

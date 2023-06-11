@@ -1,7 +1,7 @@
 "use client";
 
 import { createContext, useContext, useState } from "react";
-import { IUser } from "@/globalTypes/user";
+import { IUser, IUserCreateRequest } from "@/globalTypes/user";
 import { IUserLoginRequest } from "@/globalTypes/session";
 import * as T from "./types";
 import { toast } from "react-toast";
@@ -63,8 +63,23 @@ export default function UserProvider({ children }: T.IUserProviderProps) {
     }
   };
 
+  const createUser = async (data: IUserCreateRequest) => {
+    const token = localStorage.getItem("@SM-TOKEN");
+    try {
+      await api.post("/users", data, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      toast.success("Usuário criado com sucesso!");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
-    <userContext.Provider value={{ userLogin, user, protectStaffRoute }}>
+    <userContext.Provider
+      value={{ userLogin, user, protectStaffRoute, createUser }}
+    >
       {children}
     </userContext.Provider>
   );

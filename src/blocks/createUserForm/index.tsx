@@ -2,13 +2,14 @@ import * as C from "@/components";
 import * as T from "./types";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { IUserCreateRequest } from "@/globalTypes/user";
+import { IUserCreateRequest, IUserCreateRequestForm } from "@/globalTypes/user";
 import { userCreateSchema } from "@/schemas/user";
 import { useEffect, useState } from "react";
 import { ICompany } from "@/globalTypes/company";
 import api from "@/services/api";
 import { toast } from "react-toast";
 import { FaUser, FaQuestion, FaQuoteLeft, FaLock } from "react-icons/fa";
+import { useUserContext } from "@/contexts/user";
 
 export default function CreateUserForm({
   getAllUsers,
@@ -18,6 +19,8 @@ export default function CreateUserForm({
   const [companies, setCompanies] = useState<ICompany[]>([]);
   const [options, setOptions] = useState<string[]>([]);
   const [activeOpt, setActiveOpt] = useState<string>("");
+
+  const { createUser } = useUserContext();
 
   const toggleIsAdm = () => setIsAdm(!isAdm);
 
@@ -46,13 +49,28 @@ export default function CreateUserForm({
     handleSubmit,
     register,
     formState: { errors },
-  } = useForm<IUserCreateRequest>({
+  } = useForm<IUserCreateRequestForm>({
     resolver: zodResolver(userCreateSchema),
     reValidateMode: "onSubmit",
   });
 
-  const handleCreateUser = (data: IUserCreateRequest) => {
-    console.log(data);
+  const handleCreateUser = async (data: IUserCreateRequestForm) => {
+    delete data.confirmPassword;
+
+    const selectedCompany = companies.find(
+      (company) => company.name === activeOpt
+    );
+
+    const userRequest: IUserCreateRequest = {
+      companyId: selectedCompany!.id,
+      isAdm,
+      ...data,
+    };
+
+    await createUser(userRequest);
+    await getAllUsers();
+
+    toggleModal();
   };
 
   useEffect(() => {
@@ -64,7 +82,7 @@ export default function CreateUserForm({
       <h3 className="text-xl font-bold">Criar Empresa</h3>
       <form
         onSubmit={handleSubmit(handleCreateUser)}
-        className="flex flex-col items-center justify-center w-[98%] gap-2 mb-2"
+        className="flex flex-col items-center justify-center w-[98%] gap-4 mb-2"
       >
         <C.Input
           label="Nome"
