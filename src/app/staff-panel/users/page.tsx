@@ -21,7 +21,7 @@ export default function StaffUsersPage() {
 
   const toggleEditModal = () => setIsOpenCreate(!isOpenCreate);
 
-  const getUsers = async (page?: number, limit?: number) => {
+  const getAllUsers = async (page?: number, limit?: number) => {
     const token = localStorage.getItem("@SM-TOKEN");
     try {
       const response = await api.get("/users", {
@@ -56,7 +56,7 @@ export default function StaffUsersPage() {
     } catch (error) {
       toast.error("Erro ao filtrar os usuários");
       setIsFilter(false);
-      getUsers();
+      getAllUsers();
     }
   };
 
@@ -65,55 +65,66 @@ export default function StaffUsersPage() {
 
     if (value === "") {
       setIsFilter(false);
-      getUsers();
+      getAllUsers();
     }
   };
 
   useEffect(() => {
-    getUsers();
+    getAllUsers();
   }, []);
 
   return (
-    <section className="flex flex-col items-center justify-start w-3/4 h-full gap-4 max-md:w-full">
-      <h1 className="mb-4 text-4xl font-bold">Usuários</h1>
-
-      <B.Filter
-        placeholder="Procurar usuários"
-        filterValue={filterValue}
-        onFilterChange={filterChange}
-        onFilterAction={filterUsers}
-      />
-
-      <div className="w-full h-16">
-        <C.Button secondary onClick={() => setIsOpenCreate(true)}>
-          Criar usuário
-        </C.Button>
-      </div>
-
-      {/* Cards de usuários */}
-      {users.map((user) => (
-        <C.UserRowCard
-          key={user.id}
-          user={user}
-          toggleEditModal={toggleEditModal}
-        />
-      ))}
-
-      <div>
-        <h3 className="text-primary">
-          Total: <span>{`${count} usuário${count !== 1 ? "s" : ""}`}</span>
-        </h3>
-      </div>
-
-      {!isFilter && (
-        <div className="w-full">
-          <B.PaginationBlock
-            actionPage={getUsers}
-            currentPage={currentPage}
-            numOfPages={numOfPages}
+    <>
+      {isOpenCreate && (
+        <B.BaseModal toggleModal={toggleCreateModal}>
+          <B.CreateUserForm
+            getAllUsers={getAllUsers}
+            toggleModal={toggleCreateModal}
           />
-        </div>
+        </B.BaseModal>
       )}
-    </section>
+
+      <section className="flex flex-col items-center justify-start w-3/4 h-full gap-4 max-md:w-full">
+        <h1 className="mb-4 text-4xl font-bold">Usuários</h1>
+
+        <B.Filter
+          placeholder="Procurar usuários"
+          filterValue={filterValue}
+          onFilterChange={filterChange}
+          onFilterAction={filterUsers}
+        />
+
+        <div className="w-full h-16">
+          <C.Button secondary onClick={toggleCreateModal}>
+            Criar usuário
+          </C.Button>
+        </div>
+
+        {/* Cards de usuários */}
+        {users.map((user) => (
+          <C.UserRowCard
+            key={user.id}
+            user={user}
+            toggleEditModal={toggleEditModal}
+          />
+        ))}
+
+        <div>
+          <h3 className="text-primary">
+            Total: <span>{`${count} usuário${count !== 1 ? "s" : ""}`}</span>
+          </h3>
+        </div>
+
+        {!isFilter && (
+          <div className="w-full">
+            <B.PaginationBlock
+              actionPage={getAllUsers}
+              currentPage={currentPage}
+              numOfPages={numOfPages}
+            />
+          </div>
+        )}
+      </section>
+    </>
   );
 }

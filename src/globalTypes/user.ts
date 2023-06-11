@@ -14,8 +14,7 @@ export interface IUser {
 export interface IUserCreateRequest {
   name: string;
   password: string;
-  isAdm: boolean;
+  confirmPassword?: string;
   securityAsk: string;
   securityAnswer: string;
-  companyId: string;
 }

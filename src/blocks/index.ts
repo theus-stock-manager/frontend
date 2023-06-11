@@ -4,6 +4,7 @@ import BaseModal from "./baseModal";
 import CreateCompanyForm from "./createCompanyForm";
 import EditCompanyForm from "./editCompanyForm";
 import PaginationBlock from "./paginationBlock";
+import CreateUserForm from "./createUserForm";
 
 export {
   LoginForm,
@@ -12,4 +13,5 @@ export {
   CreateCompanyForm,
   EditCompanyForm,
   PaginationBlock,
+  CreateUserForm,
 };

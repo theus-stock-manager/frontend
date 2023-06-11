@@ -8,8 +8,6 @@ export const userCreateSchema = z
       .min(5, "no mínimo 5 caracteres")
       .regex(/^[a-zA-Z0-9]*$/, "apenas letras e números"),
 
-    isAdm: z.boolean(),
-
     securityAsk: z
       .string()
       .nonempty("campo obrigatório")
@@ -19,11 +17,6 @@ export const userCreateSchema = z
       .string()
       .nonempty("campo obrigatório")
       .min(4, "mínimo 4 caracteres"),
-
-    companyId: z
-      .string()
-      .nonempty("campo obrigatório")
-      .uuid("insira um id válido"),
 
     password: z
       .string()
