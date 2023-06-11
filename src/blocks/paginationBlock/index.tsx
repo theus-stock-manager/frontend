@@ -90,13 +90,23 @@ export default function PaginationBlock({
         <Pagination.First
           onClick={() => actionPage(1)}
           className="pagination-item"
+          disabled={currentPage === 1}
         />
-        <Pagination.Prev onClick={subCurrentPage} className="pagination-item" />
+        <Pagination.Prev
+          onClick={subCurrentPage}
+          className="pagination-item"
+          disabled={currentPage === 1}
+        />
         {setItems()}
-        <Pagination.Next onClick={addCurrentPage} className="pagination-item" />
+        <Pagination.Next
+          onClick={addCurrentPage}
+          className="pagination-item"
+          disabled={currentPage === numOfPages}
+        />
         <Pagination.Last
           onClick={() => actionPage(numOfPages)}
           className="pagination-item"
+          disabled={currentPage === numOfPages}
         />
       </Pagination>
     </section>

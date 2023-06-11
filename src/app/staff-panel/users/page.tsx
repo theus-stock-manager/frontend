@@ -22,7 +22,7 @@ export default function StaffUsersPage() {
     try {
       const response = await api.get("/users", {
         headers: { Authorization: `Bearer ${token}` },
-        params: { page: page || 1, limit: limit || 5 },
+        params: { page: page, limit: limit },
       });
 
       setUsers(response.data.results);
@@ -56,7 +56,9 @@ export default function StaffUsersPage() {
     }
   };
 
-  // useEffect(() => {}, [])
+  useEffect(() => {
+    getUsers();
+  }, []);
 
   return (
     <section className="flex flex-col items-center justify-start w-3/4 h-full gap-4 max-md:w-full">
@@ -77,13 +79,13 @@ export default function StaffUsersPage() {
 
       <div>
         <h3>
-          Total: <span>{`${count} usuário${count > 1 && "s"}`}</span>
+          Total: <span>{`${count} usuário${count !== 1 ? "s" : ""}`}</span>
         </h3>
       </div>
 
       {/* Cards de usuários */}
       {users.map((user) => (
-        <h2>{user.name}</h2>
+        <h2 key={user.id}>{user.name}</h2>
       ))}
 
       {!isFilter && (
