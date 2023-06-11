@@ -15,10 +15,14 @@ export default function StaffUsersPage() {
   const [filterValue, setFilterValue] = useState("");
   const [isFilter, setIsFilter] = useState(false);
   const [isOpenCreate, setIsOpenCreate] = useState(false);
+  const [isOpenEdit, setIsOpenEdit] = useState(false);
 
-  const token = localStorage.getItem("@SM-TOKEN");
+  const toggleCreateModal = () => setIsOpenCreate(!isOpenCreate);
+
+  const toggleEditModal = () => setIsOpenCreate(!isOpenCreate);
 
   const getUsers = async (page?: number, limit?: number) => {
+    const token = localStorage.getItem("@SM-TOKEN");
     try {
       const response = await api.get("/users", {
         headers: { Authorization: `Bearer ${token}` },
@@ -35,6 +39,7 @@ export default function StaffUsersPage() {
   };
 
   const filterUsers = async (page?: number, limit?: number) => {
+    const token = localStorage.getItem("@SM-TOKEN");
     try {
       setIsFilter(true);
 
@@ -87,7 +92,11 @@ export default function StaffUsersPage() {
 
       {/* Cards de usuários */}
       {users.map((user) => (
-        <h2 key={user.id}>{user.name}</h2>
+        <C.UserRowCard
+          key={user.id}
+          user={user}
+          toggleEditModal={toggleEditModal}
+        />
       ))}
 
       <div>

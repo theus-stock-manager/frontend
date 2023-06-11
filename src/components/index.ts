@@ -3,5 +3,6 @@ import Button from "./button";
 import Select from "./select";
 import StaffCard from "./staffCard";
 import CompanyRowCard from "./companyRowCard";
+import UserRowCard from "./userRowCard";
 
-export { Input, Button, Select, StaffCard, CompanyRowCard };
+export { Input, Button, Select, StaffCard, CompanyRowCard, UserRowCard };
