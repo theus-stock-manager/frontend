@@ -17,6 +17,8 @@ module.exports = {
         "button-hover-color-secondary": "#10330e",
         "select-color-primary": "#fff",
         "select-color-secondary": "#fff",
+        primary: "#6880ff",
+        secondary: "#688000",
       },
       placeholderColor: {
         "input-placeholder-color-primary": "#505050",

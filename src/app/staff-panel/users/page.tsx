@@ -38,13 +38,20 @@ export default function StaffUsersPage() {
     try {
       setIsFilter(true);
 
-      //lógica de filtragem
+      const response = await api.get("/users/filter", {
+        headers: { Authorization: `Bearer ${token}` },
+        params: { partialName: filterValue },
+      });
+
+      setUsers(response.data.results);
+      setCount(response.data.count);
 
       setCurrentPage(1);
       setNumOfPages(1);
     } catch (error) {
       toast.error("Erro ao filtrar os usuários");
       setIsFilter(false);
+      getUsers();
     }
   };
 
@@ -52,6 +59,7 @@ export default function StaffUsersPage() {
     setFilterValue(value);
 
     if (value === "") {
+      setIsFilter(false);
       getUsers();
     }
   };
@@ -77,16 +85,16 @@ export default function StaffUsersPage() {
         </C.Button>
       </div>
 
-      <div>
-        <h3>
-          Total: <span>{`${count} usuário${count !== 1 ? "s" : ""}`}</span>
-        </h3>
-      </div>
-
       {/* Cards de usuários */}
       {users.map((user) => (
         <h2 key={user.id}>{user.name}</h2>
       ))}
+
+      <div>
+        <h3 className="text-primary">
+          Total: <span>{`${count} usuário${count !== 1 ? "s" : ""}`}</span>
+        </h3>
+      </div>
 
       {!isFilter && (
         <div className="w-full">

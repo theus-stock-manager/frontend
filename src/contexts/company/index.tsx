@@ -27,12 +27,6 @@ export const useCompanyContext = () => {
 
 export default function CompanyProvider({ children }: T.ICompanyProviderProps) {
   const [company, setCompany] = useState<ICompany>({} as ICompany);
-  // const [companyCategories, setCompanyCategories] = useState<ICategory[]>([]);
-  // const [companyProducts, setCompanyProducts] = useState<IProduct[]>([]);
-  // const [companySales, setCompanySales] = useState<ISale[]>([]);
-  // const [companyUsers, setCompanyUsers] = useState<IUser[]>([]);
-
-  const token = localStorage.getItem("@SM-TOKEN");
 
   const { user } = useUserContext();
 
@@ -40,6 +34,7 @@ export default function CompanyProvider({ children }: T.ICompanyProviderProps) {
     data: ICompanyCreateRequest,
     toggle: () => void
   ) => {
+    const token = localStorage.getItem("@SM-TOKEN");
     try {
       await api.post("/companies", data, {
         headers: { Authorization: `Bearer ${token}` },
@@ -57,6 +52,7 @@ export default function CompanyProvider({ children }: T.ICompanyProviderProps) {
     toggle: () => void,
     companyId: string
   ) => {
+    const token = localStorage.getItem("@SM-TOKEN");
     try {
       await api.patch(`/companies/${companyId}`, data, {
         headers: { Authorization: `Bearer ${token}` },
@@ -70,6 +66,7 @@ export default function CompanyProvider({ children }: T.ICompanyProviderProps) {
   };
 
   const deleteCompany = async (toggle: () => void, companyId: string) => {
+    const token = localStorage.getItem("@SM-TOKEN");
     try {
       await api.delete(`/companies/${companyId}`, {
         headers: { Authorization: `Bearer ${token}` },
@@ -82,91 +79,11 @@ export default function CompanyProvider({ children }: T.ICompanyProviderProps) {
     }
   };
 
-  // const getCompanyCategories = async (companyId: string) => {
-  //   try {
-  //     api
-  //       .get(`/companies/${companyId}/categories`, {
-  //         headers: {
-  //           Authorization: `Bearer ${token}`,
-  //         },
-  //       })
-  //       .then((res) => {
-  //         setCompanyCategories(res.data.results);
-  //       });
-  //   } catch (error) {
-  //     toast.error("Categorias: algo deu errado.");
-  //   }
-  // };
-
-  // const getCompanyProducts = async (companyId: string, url?: string) => {
-  //   try {
-  //     api
-  //       .get(url || `/companies/${companyId}/products`, {
-  //         headers: {
-  //           Authorization: `Bearer ${token}`,
-  //         },
-  //       })
-  //       .then((res) => {
-  //         setCompanyProducts(res.data.results);
-  //       });
-  //   } catch (error) {
-  //     toast.error("Produtos: algo deu errado.");
-  //   }
-  // };
-
-  // const getCompanySales = async (companyId: string, url?: string) => {
-  //   try {
-  //     api
-  //       .get(url || `/companies/${companyId}/sales`, {
-  //         headers: {
-  //           Authorization: `Bearer ${token}`,
-  //         },
-  //       })
-  //       .then((res) => {
-  //         setCompanySales(res.data.results);
-  //       });
-  //   } catch (error) {
-  //     toast.error("Vendas: algo deu errado.");
-  //   }
-  // };
-
-  // const getCompanyUsers = async (companyId: string) => {
-  //   try {
-  //     api
-  //       .get(`/companies/${companyId}/users`, {
-  //         headers: {
-  //           Authorization: `Bearer ${token}`,
-  //         },
-  //       })
-  //       .then((res) => {
-  //         setCompanyUsers(res.data.results);
-  //       });
-  //   } catch (error) {
-  //     toast.error("Usuários: algo deu errado.");
-  //   }
-  // };
-
-  // const getCompanyInfo = async (companyId: string) => {
-  //   user?.isStaff && getCompanyUsers(companyId);
-
-  //   user?.isAdm && getCompanySales(companyId);
-
-  //   getCompanyCategories(companyId);
-  //   getCompanyProducts(companyId);
-  // };
-
   useEffect(() => {
     if (!!user) {
       setCompany(user.company);
-      // getCompanyInfo(user.company.id);
     }
   }, [user]);
-
-  // console.log("Empresa => ", company);
-  // console.log("Categorias => ", companyCategories);
-  // console.log("Produtos => ", companyProducts);
-  // console.log("Vendas => ", companySales);
-  // console.log("Usuários => ", companyUsers);
 
   return (
     <companyContext.Provider
