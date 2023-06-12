@@ -1,7 +1,11 @@
 "use client";
 
 import { createContext, useContext, useState } from "react";
-import { IUser, IUserCreateRequest } from "@/globalTypes/user";
+import {
+  IUser,
+  IUserCreateRequest,
+  IUserUpdateRequest,
+} from "@/globalTypes/user";
 import { IUserLoginRequest } from "@/globalTypes/session";
 import * as T from "./types";
 import { toast } from "react-toast";
@@ -83,9 +87,50 @@ export default function UserProvider({ children }: T.IUserProviderProps) {
     }
   };
 
+  const updateUser = async (data: IUserUpdateRequest | {}, userId: string) => {
+    const token = localStorage.getItem("@SM-TOKEN");
+    console.log(!!data);
+
+    try {
+      if (!data) {
+        toast.error("Nada para atualizar");
+        throw new Error();
+      }
+
+      await api.patch(`/users/${userId}`, data, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      toast.success("Usuário atualizado com sucesso");
+    } catch (error) {
+      toast.error("erro ao atualizar um usuário");
+    }
+  };
+
+  const deleteUser = async (userId: string, toggleModal: () => void) => {
+    const token = localStorage.getItem("@SM-TOKEN");
+    try {
+      await api.delete(`users/${userId}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      toast.success("Usuário deletado com suucesso");
+      toggleModal();
+    } catch (error) {
+      toast.error("Erro ao deletar usuário");
+    }
+  };
+
   return (
     <userContext.Provider
-      value={{ userLogin, user, protectStaffRoute, createUser }}
+      value={{
+        userLogin,
+        user,
+        protectStaffRoute,
+        createUser,
+        deleteUser,
+        updateUser,
+      }}
     >
       {children}
     </userContext.Provider>

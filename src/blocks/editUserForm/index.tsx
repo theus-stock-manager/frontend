@@ -13,6 +13,7 @@ import {
   FaTrash,
 } from "react-icons/fa";
 import { userUpdateSchema } from "@/schemas/user";
+import { useUserContext } from "@/contexts/user";
 
 export default function EditUserForm({
   getAllUsers,
@@ -25,6 +26,8 @@ export default function EditUserForm({
   const toggleIsDeleteOpen = () => setIsDeleteOpen(!isDeleteOpen);
 
   const toggleIsAdm = () => setIsAdm(!isAdm);
+
+  const { deleteUser, updateUser } = useUserContext();
 
   const {
     handleSubmit,
@@ -48,16 +51,15 @@ export default function EditUserForm({
 
     isAdm !== selectedUser.isAdm && (userUpdate.isAdm = isAdm);
 
-    // await getAllUsers();
-    console.log(userUpdate);
-
+    await updateUser(userUpdate, selectedUser.id);
+    await getAllUsers();
     toggleModal();
   };
 
   const handleDeleteUser = async () => {
-    // await deleteCompany(toggleIsDeleteOpen, selectedCompany!.id);
-    // await getAllCompanies();
-    // toggleModal();
+    await deleteUser(selectedUser.id, toggleIsDeleteOpen);
+    await getAllUsers();
+    toggleModal();
   };
 
   const ModalDelete = () => (

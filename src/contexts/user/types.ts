@@ -1,6 +1,9 @@
-import { ICompany } from "@/globalTypes/company";
 import { IUserLoginRequest } from "@/globalTypes/session";
-import { IUser, IUserCreateRequest } from "@/globalTypes/user";
+import {
+  IUser,
+  IUserCreateRequest,
+  IUserUpdateRequest,
+} from "@/globalTypes/user";
 import { ReactNode } from "react";
 
 export interface IUserContext {
@@ -8,6 +11,8 @@ export interface IUserContext {
   userLogin: (data: IUserLoginRequest) => Promise<void>;
   createUser: (data: IUserCreateRequest) => Promise<void>;
   protectStaffRoute: () => Promise<void>;
+  updateUser: (data: IUserUpdateRequest | {}, userId: string) => Promise<void>;
+  deleteUser: (userId: string, toggleModal: () => void) => Promise<void>;
 }
 
 export interface IUserProviderProps {
