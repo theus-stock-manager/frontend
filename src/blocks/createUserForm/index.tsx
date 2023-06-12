@@ -79,7 +79,7 @@ export default function CreateUserForm({
 
   return (
     <section className="flex flex-col items-center justify-start w-full gap-4 overflow-y-auto max-h-[70vh]">
-      <h3 className="text-xl font-bold">Criar Empresa</h3>
+      <h3 className="text-xl font-bold">Criar Usuário</h3>
       <form
         onSubmit={handleSubmit(handleCreateUser)}
         className="flex flex-col items-center justify-center w-[98%] gap-4 mb-2"

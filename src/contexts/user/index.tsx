@@ -7,6 +7,7 @@ import * as T from "./types";
 import { toast } from "react-toast";
 import { useRouter } from "next/navigation";
 import api from "@/services/api";
+import { AxiosError } from "axios";
 
 const userContext = createContext<T.IUserContext>({} as T.IUserContext);
 
@@ -72,7 +73,11 @@ export default function UserProvider({ children }: T.IUserProviderProps) {
 
       toast.success("Usuário criado com sucesso!");
     } catch (error) {
-      console.log(error);
+      if (error instanceof AxiosError && error.response?.status === 409) {
+        toast.error("Usuário já existe no banco de dados");
+      } else {
+        toast.error("Erro ao tentar criar um usuário");
+      }
     }
   };
 

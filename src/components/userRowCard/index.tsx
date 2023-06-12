@@ -47,7 +47,7 @@ export default function UserRowCard({
     >
       <div className="h-full max-lg:min-w-[25%] w-[15%] max-sm:h-3/4 flex justify-center items-center text-center">
         <h3
-          className="max-md:text-[10pt] text-base w-full overflow-hidden"
+          className="max-md:text-[10pt] text-base w-full overflow-hidden text-ellipsis"
           title={name}
         >
           {name}
