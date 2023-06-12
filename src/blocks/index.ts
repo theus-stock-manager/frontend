@@ -5,6 +5,7 @@ import CreateCompanyForm from "./createCompanyForm";
 import EditCompanyForm from "./editCompanyForm";
 import PaginationBlock from "./paginationBlock";
 import CreateUserForm from "./createUserForm";
+import EditUserForm from "./editUserForm";
 
 export {
   LoginForm,
@@ -14,4 +15,5 @@ export {
   EditCompanyForm,
   PaginationBlock,
   CreateUserForm,
+  EditUserForm,
 };

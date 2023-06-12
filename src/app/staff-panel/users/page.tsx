@@ -15,11 +15,12 @@ export default function StaffUsersPage() {
   const [filterValue, setFilterValue] = useState("");
   const [isFilter, setIsFilter] = useState(false);
   const [isOpenCreate, setIsOpenCreate] = useState(false);
+  const [selectedUser, setSelectedUser] = useState<IUser | null>(null);
   const [isOpenEdit, setIsOpenEdit] = useState(false);
 
   const toggleCreateModal = () => setIsOpenCreate(!isOpenCreate);
 
-  const toggleEditModal = () => setIsOpenCreate(!isOpenCreate);
+  const toggleEditModal = () => setIsOpenEdit(!isOpenEdit);
 
   const getAllUsers = async (page?: number, limit?: number) => {
     const token = localStorage.getItem("@SM-TOKEN");
@@ -84,6 +85,16 @@ export default function StaffUsersPage() {
         </B.BaseModal>
       )}
 
+      {isOpenEdit && (
+        <B.BaseModal toggleModal={toggleEditModal}>
+          <B.EditUserForm
+            getAllUsers={getAllUsers}
+            selectedUser={selectedUser!}
+            toggleModal={toggleEditModal}
+          />
+        </B.BaseModal>
+      )}
+
       <section className="flex flex-col items-center justify-start w-3/4 h-full gap-4 max-md:w-full">
         <h1 className="mb-4 text-4xl font-bold">Usuários</h1>
 
@@ -105,7 +116,10 @@ export default function StaffUsersPage() {
           <C.UserRowCard
             key={user.id}
             user={user}
-            toggleEditModal={toggleEditModal}
+            toggleEditModal={() => {
+              setSelectedUser(user);
+              toggleEditModal();
+            }}
           />
         ))}
 

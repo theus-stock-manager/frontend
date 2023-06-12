@@ -59,8 +59,10 @@ export default function UserProvider({ children }: T.IUserProviderProps) {
 
       router.push("/staff-panel");
     } catch (error) {
+      console.log(error);
+
       toast.error("Algo deu errado");
-      router.push("/erro");
+      // router.push("/erro");
     }
   };
 

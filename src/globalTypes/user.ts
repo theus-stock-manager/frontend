@@ -19,6 +19,23 @@ export interface IUserCreateRequestForm {
   securityAnswer: string;
 }
 
+export interface IUserUpdateRequestForm {
+  name?: string;
+  password?: string;
+  confirmPassword?: string;
+  securityAsk?: string;
+  securityAnswer?: string;
+}
+
+export interface IUserUpdateRequest {
+  name?: string;
+  password?: string;
+  confirmPassword?: string;
+  isAdm?: boolean;
+  securityAsk?: string;
+  securityAnswer?: string;
+}
+
 export interface IUserCreateRequest {
   name: string;
   password: string;
