@@ -16,7 +16,7 @@ export default function LoginPage() {
           Esqueceu sua senha?{" "}
           <Link
             className="text-[10pt] text-[#CAD3C8] font-normal transition-all hover:inline-block hover:translate-y-[-0.1rem] hover:text-[#82ccdd] hover:transition-all"
-            href="/change-password"
+            href="/forgot-password"
           >
             Solicite
           </Link>{" "}

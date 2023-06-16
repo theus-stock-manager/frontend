@@ -1,3 +1,5 @@
+"use client";
+
 import * as T from "./types";
 import * as C from "@/components";
 import * as B from "@/blocks";

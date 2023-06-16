@@ -1,3 +1,5 @@
+"use client";
+
 import * as C from "@/components";
 import * as T from "./types";
 import { useForm } from "react-hook-form";

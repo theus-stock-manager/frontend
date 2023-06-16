@@ -89,21 +89,19 @@ export default function UserProvider({ children }: T.IUserProviderProps) {
 
   const updateUser = async (data: IUserUpdateRequest | {}, userId: string) => {
     const token = localStorage.getItem("@SM-TOKEN");
-    console.log(!!data);
 
     try {
-      if (!data) {
-        toast.error("Nada para atualizar");
-        throw new Error();
-      }
-
       await api.patch(`/users/${userId}`, data, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
       toast.success("Usuário atualizado com sucesso");
     } catch (error) {
-      toast.error("erro ao atualizar um usuário");
+      if (error instanceof AxiosError && error.response?.status === 406) {
+        toast.error("Nada para atualizar");
+      } else {
+        toast.error("erro ao atualizar um usuário");
+      }
     }
   };
 
