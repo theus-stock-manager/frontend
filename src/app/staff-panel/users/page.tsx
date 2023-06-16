@@ -4,7 +4,9 @@ import * as B from "@/blocks";
 import * as C from "@/components";
 import { IUser } from "@/globalTypes/user";
 import api from "@/services/api";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { IoArrowBackCircleOutline } from "react-icons/io5";
 import { toast } from "react-toast";
 
 export default function StaffUsersPage() {
@@ -17,6 +19,8 @@ export default function StaffUsersPage() {
   const [isOpenCreate, setIsOpenCreate] = useState(false);
   const [selectedUser, setSelectedUser] = useState<IUser | null>(null);
   const [isOpenEdit, setIsOpenEdit] = useState(false);
+
+  const router = useRouter();
 
   const toggleCreateModal = () => setIsOpenCreate(!isOpenCreate);
 
@@ -96,6 +100,11 @@ export default function StaffUsersPage() {
       )}
 
       <section className="flex flex-col items-center justify-start w-3/4 h-full gap-4 max-md:w-full">
+        <IoArrowBackCircleOutline
+          onClick={() => router.back()}
+          className="absolute text-5xl cursor-pointer top-4 left-4"
+        />
+
         <h1 className="mb-4 text-4xl font-bold">Usuários</h1>
 
         <B.Filter

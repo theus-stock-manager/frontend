@@ -6,7 +6,10 @@ import {
   IUserCreateRequest,
   IUserUpdateRequest,
 } from "@/globalTypes/user";
-import { IUserLoginRequest } from "@/globalTypes/session";
+import {
+  IChangePasswordRequest,
+  IUserLoginRequest,
+} from "@/globalTypes/session";
 import * as T from "./types";
 import { toast } from "react-toast";
 import { useRouter } from "next/navigation";
@@ -119,6 +122,20 @@ export default function UserProvider({ children }: T.IUserProviderProps) {
     }
   };
 
+  const changePassword = async (
+    data: IChangePasswordRequest,
+    userName: string
+  ) => {
+    try {
+      await api.post(`/session/recover-password/${userName}`, data);
+
+      toast.success("Senha alterada com sucesso");
+      router.push("/login");
+    } catch (error) {
+      toast.error("Erro ao atualizar a senha");
+    }
+  };
+
   return (
     <userContext.Provider
       value={{
@@ -128,6 +145,7 @@ export default function UserProvider({ children }: T.IUserProviderProps) {
         createUser,
         deleteUser,
         updateUser,
+        changePassword,
       }}
     >
       {children}

@@ -1,4 +1,7 @@
-import { IUserLoginRequest } from "@/globalTypes/session";
+import {
+  IChangePasswordRequest,
+  IUserLoginRequest,
+} from "@/globalTypes/session";
 import {
   IUser,
   IUserCreateRequest,
@@ -13,6 +16,10 @@ export interface IUserContext {
   protectStaffRoute: () => Promise<void>;
   updateUser: (data: IUserUpdateRequest | {}, userId: string) => Promise<void>;
   deleteUser: (userId: string, toggleModal: () => void) => Promise<void>;
+  changePassword: (
+    data: IChangePasswordRequest,
+    userName: string
+  ) => Promise<void>;
 }
 
 export interface IUserProviderProps {

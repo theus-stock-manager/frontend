@@ -7,6 +7,8 @@ import { toast } from "react-toast";
 import * as B from "@//blocks";
 import * as C from "@//components";
 import api from "@/services/api";
+import { IoArrowBackCircleOutline } from "react-icons/io5";
+import { useRouter } from "next/navigation";
 
 export default function StaffCompaniesPage() {
   const [companies, setCompanies] = useState<ICompany[]>([]);
@@ -16,7 +18,10 @@ export default function StaffCompaniesPage() {
   const [isOpenCreate, setIsOpenCreate] = useState(false);
   const [isOpenEdit, setIsOpenEdit] = useState(false);
   const [selectedCompany, setSelectedCompany] = useState<ICompany | null>(null);
+
   const { protectStaffRoute } = useUserContext();
+
+  const router = useRouter();
 
   const token = localStorage.getItem("@SM-TOKEN");
 
@@ -80,6 +85,11 @@ export default function StaffCompaniesPage() {
       )}
 
       <section className="flex flex-col items-center justify-start w-3/4 h-full gap-4 max-md:w-full">
+        <IoArrowBackCircleOutline
+          onClick={() => router.back()}
+          className="absolute text-5xl cursor-pointer top-4 left-4"
+        />
+
         <h1 className="mb-4 text-4xl font-bold">Empresas</h1>
 
         <B.Filter
