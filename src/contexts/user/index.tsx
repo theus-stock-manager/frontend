@@ -136,6 +136,16 @@ export default function UserProvider({ children }: T.IUserProviderProps) {
     }
   };
 
+  const logout = () => {
+    toast.success("Saindo...");
+    localStorage.removeItem("@SM-USER-ID");
+    localStorage.removeItem("@SM-TOKEN");
+
+    setTimeout(() => {
+      router.push("/login");
+    }, 1000);
+  };
+
   return (
     <userContext.Provider
       value={{
@@ -146,6 +156,7 @@ export default function UserProvider({ children }: T.IUserProviderProps) {
         deleteUser,
         updateUser,
         changePassword,
+        logout,
       }}
     >
       {children}

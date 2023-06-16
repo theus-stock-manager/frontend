@@ -20,6 +20,7 @@ export interface IUserContext {
     data: IChangePasswordRequest,
     userName: string
   ) => Promise<void>;
+  logout: () => void;
 }
 
 export interface IUserProviderProps {
