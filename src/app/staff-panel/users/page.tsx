@@ -2,6 +2,7 @@
 
 import * as B from "@/blocks";
 import * as C from "@/components";
+import { useUserContext } from "@/contexts/user";
 import { IUser } from "@/globalTypes/user";
 import api from "@/services/api";
 import { useRouter } from "next/navigation";
@@ -21,6 +22,7 @@ export default function StaffUsersPage() {
   const [isOpenEdit, setIsOpenEdit] = useState(false);
 
   const router = useRouter();
+  const { protectStaffRoute } = useUserContext();
 
   const toggleCreateModal = () => setIsOpenCreate(!isOpenCreate);
 
@@ -75,6 +77,7 @@ export default function StaffUsersPage() {
   };
 
   useEffect(() => {
+    protectStaffRoute();
     getAllUsers();
   }, []);
 

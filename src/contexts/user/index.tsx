@@ -48,6 +48,8 @@ export default function UserProvider({ children }: T.IUserProviderProps) {
         throw new Error();
       }
     } catch (error) {
+      localStorage.removeItem("@SM-USER-ID");
+      localStorage.removeItem("@SM-TOKEN");
       toast.error("Entre com uma conta staff para acessar essa rota");
 
       router.push("/login");
